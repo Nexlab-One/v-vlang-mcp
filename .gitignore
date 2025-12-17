@@ -1,0 +1,28 @@
+# V build artifacts
+*.exe
+*.so
+*.dylib
+*.dll
+*.o
+*.a
+*.out
+v
+v.exe
+
+# V cache
+.cache/
+*.cache
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Test artifacts
+*.test.exe
+test_*
