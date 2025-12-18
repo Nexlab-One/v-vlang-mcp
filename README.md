@@ -18,21 +18,47 @@ This MCP server enables AI assistants and other tools to access V language resou
 
 ## Requirements
 
-- [V programming language](https://vlang.io) installed
+- [V programming language](https://vlang.io) installed and on PATH
 - V repository cloned (for documentation and examples)
+  - When used as a submodule, the parent `v-mcp` repository serves as the V repository
+  - For standalone use, set `V_REPO_PATH` environment variable
 - Optional: v-ui submodule (for V UI examples)
+  - Automatically detected when used as a submodule in `v-mcp`
+  - For standalone use, set `V_UI_PATH` environment variable
 
 ## Building
 
-```bash
-v build src/main.v -o v-mcp-server
+### Windows
+
+```batch
+.\build.bat
 ```
 
-Or simply:
+This will create `v-mcp-server.exe` in the project root.
+
+### Linux/macOS
 
 ```bash
-v src/main.v
+./build.sh
 ```
+
+This will create `v-mcp-server` in the project root.
+
+### Manual Build
+
+Alternatively, you can build manually:
+
+**Windows:**
+```batch
+v -o v-mcp-server.exe .\src\main.v
+```
+
+**Linux/macOS:**
+```bash
+v -o v-mcp-server ./src/main.v
+```
+
+> **Note:** The build scripts use `.\src\main.v` (Windows) or `./src/main.v` (Unix) to avoid module path resolution issues with V's compiler.
 
 ## Configuration
 
@@ -131,6 +157,10 @@ V_REPO_PATH=/path/to/v ./v-mcp-server
 │   │   └── docs_server.v  # Documentation server implementation
 │   └── tools/
 │       └── tools.v        # Tool registry and handlers
+├── build.bat               # Windows build script
+├── build.sh                # Linux/macOS build script
+├── build.bat               # Windows build script
+├── build.sh                # Linux/macOS build script
 ├── v.mod                   # V module definition
 └── README.md              # This file
 ```
@@ -164,7 +194,23 @@ The server implements proper JSON-RPC 2.0 error handling:
 
 ## Integration
 
-This server is designed to be used as a submodule in the main V MCP repository. It provides V-specific functionality while the parent repository handles MCP server management and orchestration.
+This server is designed to be used as a submodule in the main V MCP repository (`v-mcp`). It provides V-specific functionality while the parent repository handles MCP server management and orchestration.
+
+### As a Submodule
+
+When used as a submodule in the `v-mcp` repository:
+
+1. The server automatically detects the V repository from the parent directory
+2. The V UI submodule (if present) is automatically detected
+3. All paths are resolved relative to the parent repository structure
+
+### Standalone Usage
+
+This server can also be used standalone:
+
+1. Set the `V_REPO_PATH` environment variable to point to your V repository
+2. Optionally set `V_UI_PATH` if you have the V UI repository in a different location
+3. Build and run the server as described above
 
 ## Development
 
